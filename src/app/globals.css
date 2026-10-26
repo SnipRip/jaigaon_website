@@ -1,0 +1,121 @@
+@import "tailwindcss";
+
+/* Design tokens. Brand blue and green are taken from the company logo. */
+@theme {
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --color-ground: #f5f7fb;
+  --color-ink: #0f1b3a;
+  --color-ink-soft: #33405f;
+  --color-muted: #4a5676;
+  --color-line: rgb(15 27 58 / 0.1);
+  --color-navy: #0e2a5c;
+  --color-navy-deep: #0a1838;
+  --color-on-navy: #d5def0;
+
+  --color-brand: #0b4dbb;
+  --color-brand-strong: #083a8f;
+  --color-brand-tint: #dce8fb;
+
+  --color-success: #1b7a45;
+  --color-success-strong: #14613a;
+
+  --color-danger: #9a2a1f;
+}
+
+/* Liquid Glass, after Apple: clear rather than frosted, read as glass from
+   the light it catches along its edges. Used for the navbar and the card
+   over the hero photo. The prefixed line comes first: the build keeps only
+   the last of the pair otherwise, and Chrome ignores the prefixed one. */
+@utility glass {
+  background: linear-gradient(155deg, rgb(255 255 255 / 0.62), rgb(255 255 255 / 0.34) 42%, rgb(255 255 255 / 0.46));
+  -webkit-backdrop-filter: blur(16px) saturate(190%) brightness(1.04);
+  backdrop-filter: blur(16px) saturate(190%) brightness(1.04);
+  border: 1px solid rgb(255 255 255 / 0.55);
+  box-shadow:
+    inset 1.5px 1.5px 0.5px -0.5px rgb(255 255 255 / 0.95),
+    inset -1.5px -1.5px 0.5px -0.5px rgb(255 255 255 / 0.6),
+    inset 0 0 22px -6px rgb(255 255 255 / 0.55),
+    0 1px 2px rgb(20 40 90 / 0.06),
+    0 16px 40px -8px rgb(20 40 90 / 0.16);
+}
+
+/* Width and side padding shared by every section. */
+@utility container-page {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Keeps anchored sections clear of the sticky navbar. */
+  scroll-padding-top: 104px;
+}
+
+body {
+  background: var(--color-ground);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+/* Browser defaults replaced so nothing on screen is drawn in the operating
+   system's own style. The sign-up form's dropdown and tick box are
+   components in features/whatsapp-optin; the rest is restyled here. */
+
+::selection {
+  background: var(--color-brand-tint);
+  color: var(--color-ink);
+}
+
+/* Scrollbars: a slim rounded thumb on a clear track. */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track,
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-button {
+  display: none;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(15 27 58 / 0.24);
+  background-clip: content-box;
+  border: 3px solid transparent;
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(15 27 58 / 0.42);
+}
+
+/* Firefox has no ::-webkit-scrollbar. Setting these in Chrome as well would
+   switch the rules above off, hence the guard. */
+@supports not selector(::-webkit-scrollbar) {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: rgb(15 27 58 / 0.3) transparent;
+  }
+}
+
+/* Keeps saved names and numbers from turning the field pale blue. */
+input:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-ink);
+  box-shadow: inset 0 0 0 100px #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
